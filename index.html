@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor y Escalador</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .contenedor {
+            width: 100%;
+            max-width: 400px;
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+
+        .seccion {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+        }
+
+        .seccion-titulo {
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            height: 40px;
+            margin-bottom: 15px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            height: 45px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #388E3C;
+        }
+
+        .resultado {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e8f5e9;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            color: #2e7d32;
+            min-height: 20px;
+        }
+
+        .divisor {
+            text-align: center;
+            margin: 20px 0;
+            color: #bbb;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="contenedor">
+    <h2>Herramientas de Medida</h2>
+
+    <div class="seccion">
+        <span class="seccion-titulo">1. Convertir M a Cm</span>
+        <label>Medida en Metros (M):</label>
+        <input type="number" id="metros" placeholder="Ej: 1.5" step="any">
+        <button type="button" onclick="convertirMtoCm()">Convertir</button>
+        <div id="res-conv" class="resultado">---</div>
+    </div>
+
+    <div class="divisor">O BIEN</div>
+
+    <div class="seccion">
+        <span class="seccion-titulo">2. Escalar un Dibujo</span>
+        <label>Escala 1 :</label>
+        <input type="number" id="escala" placeholder="Ej: 50" step="any">
+        <label>Valor del objeto en Cm:</label>
+        <input type="number" id="medidaCm" placeholder="Ej: 100" step="any">
+        <button type="button" onclick="escalarDibujo()" style="background-color: #2196F3;">Calcular Escala</button>
+        <div id="res-escala" class="resultado">---</div>
+    </div>
+</div>
+
+<script>
+    // Lógica para convertir Metros a Centímetros
+    function convertirMtoCm() {
+        const metros = parseFloat(document.getElementById("metros").value);
+        const display = document.getElementById("res-conv");
+
+        if (isNaN(metros)) {
+            display.innerHTML = "Por favor, ingresa un valor";
+            return;
+        }
+
+        const cm = metros * 100;
+        display.innerHTML = `${metros} M son ${cm} cm`;
+    }
+
+    // Lógica para escalar (valor / escala)
+    function escalarDibujo() {
+        const escala = parseFloat(document.getElementById("escala").value);
+        const medida = parseFloat(document.getElementById("medidaCm").value);
+        const display = document.getElementById("res-escala");
+
+        if (isNaN(escala) || isNaN(medida)) {
+            display.innerHTML = "Completa ambos campos";
+            return;
+        }
+
+        if (escala === 0) {
+            display.innerHTML = "La escala no puede ser 0";
+            return;
+        }
+
+        const resultado = medida / escala;
+        // .toFixed(2) para mostrar solo 2 decimales si es necesario
+        display.innerHTML = `Medida en escala 1:${escala} es ${resultado.toFixed(2)} cm`;
+    }
+</script>
+
+</body>
+</html>
